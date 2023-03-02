@@ -1,4 +1,5 @@
-# MQ-Quad-Debian-Setup
+# MQ-Quad Debian 安裝系統
+這裡記錄如何使用 [MangoPI MQ-Quad](https://mangopi.org/mangopi_mqquad)，安裝 Debian 系統、設定 wifi連線、ssh 遙控連線、安裝 Node.js、並使用 VS code 編寫程式。
 
 ## 一、燒錄 Debian 作業系統
 使用 [balenaEtcher](https://www.balena.io/etcher) 將 [Debian (XFCE)](https://mangopi.org/mangopi_mqquad) 燒錄至 SD-card 中。
@@ -14,11 +15,11 @@
 第一次開機會較久，待左上會出現游標，約1分鐘後進入桌面。
 
 ### 切換回 Console 並登入
-因大多數的操作還是使用 Console 介面來執行比較有效率，所以成功進入桌面後（預設行為），第一件事就是離開桌面回到 Console。
+因大多數的操作還是使用 Console 來執行比較有效率，所以成功進入桌面後（預設行為），第一件事就是離開桌面回到 Console。
 
 按下：Ctrl + Alt + F3
 
-切換回 Console 並重新登入。
+切換回 Console 並登入。
 
 ```
 login: root
@@ -26,7 +27,7 @@ Password: orangepi
 ```
 
 ## 三、設定開機為 Console （不進桌面）
-設定開機進 Console：
+這邊改為以後開機預設都直接進 Console：
 ```
 sudo systemctl set-default multi-user.target
 ```
@@ -54,10 +55,6 @@ nmcli device status
 
 
 ## 五、查看 wifi 內網 IP
-通常使用這種開發板，最合適的操作方式是使用一般的個人電腦用 ssh 遠端連線來控制。（兩者需在同一個無線網路中）
-
-所以首先需要知道當前連線的內網IP位址。
-
 顯示連線資訊：
 ```
 ip a
@@ -80,10 +77,12 @@ ip a
 尋找 wlan0 底下的 ***192.168.0.154*** 就是內網 IP
 
 ## 六、遠端連線(SSH)
+此類型的開發板，最合適的操作方式是使用個人電腦以 ssh 遠端連線來遙控。（兩者需在同一個無線網路中）這時候開發板就不必再連接螢幕和鍵盤，只需接上電源，之後都用遙控方式操作。
+
 - Mac 使用 Terminal 或 [iTerm2](https://iterm2.com/)。
 - Windows 使用 [Putty](https://www.putty.org/) 或安裝 [OpenSSH](https://www.howtogeek.com/311287/how-to-connect-to-an-ssh-server-from-windows-macos-or-linux/) 後使用 PowerShell。
 
-ssh 遠端連線：
+建立 ssh 遙控連線：
 ```
 ssh root@192.168.0.xxx
 ```
@@ -120,10 +119,27 @@ source ~/.bashrc
 ```
 nvm -v
 ```
-### 安裝最新穩定版 Node.js
+
+5. 安裝最新穩定版 Node.js
 ```
 nvm insall node
 ```
+
+6. 設為每次開機自動載入 nvm
+
+建立檔案： ~/.bash_profile
+```
+vim ~/.bash_profile
+```
+
+內容填入下方指令，並儲存(:wq)。
+```
+if [ -f ~/.bashrc ]; then
+source ~/.bashrc
+fi
+```
+
+
 ### 其他 nvm 常用指令
 |指令|說明|
 |---|---|
