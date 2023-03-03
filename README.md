@@ -35,6 +35,18 @@ sudo systemctl set-default multi-user.target
 ```
 sudo systemctl set-default graphical.target
 ```
+### 顯示開機log資訊
+mangopi 的預設是關閉開機 log 資訊的，下面方式可以打開。
+開啟設定程式:
+```
+orangepi-config
+```
+選擇 System / Bootenv
+將 console=serial 改為
+```
+console=both
+```
+按 Tab 選到 Save 後離開並重新開機(sudo reboot)即可。
 
 ## 四、使用 nmcli 設定 wifi
 下方是常用的 wifi 連線相關指令：
@@ -100,9 +112,10 @@ ssh root@192.168.0.xxx
 ```
 
 ## 七、安裝 Node.js
-考慮到之後 Node.js 版本的管理問題，比較好的方式是先安裝 Node 的版本管理軟體 nvm，再由他來安裝指定版本。（好處：之後可以安裝多個版本，並在其中隨時切換。）
+考慮到之後 Node.js 版本的管理問題，比較好的方式是先安裝 Node 的版本管理軟體 nvm，再由他來安裝指定版本。[參考](https://www.imaginelinux.com/install-nvm-debian-11/)
 
-### 安裝 nvm ([參考](https://www.imaginelinux.com/install-nvm-debian-11/))：
+- 好處：之後可以安裝多個版本，並在其中隨時切換。
+
 1. 安裝 curl, wget, tar：
 ```
 sudo apt install curl wget tar
@@ -159,6 +172,7 @@ fi
 |cd ~|回到使用者資料夾|
 |mkdir "資料夾名稱"｜建立資料夾|
 |mv "目前路徑" "新路徑"|修改檔名、或移動檔案|
+|rm -r "檔案名稱"|刪除檔案|
 |sudo reboot|重新開機|
 |sudo poweroff|關機｜
 |ip a|查看網路連線資訊|
